@@ -1,9 +1,10 @@
 #/bin/bash
-EXMAPLE_DIR=exemplos/
+EXAMPLE_DIR=exemplos/
 EXAMPLE_FILE=maiorDeDoisNumeros.i
 RES_FILE=res.msp
 
-make all
+make clean
+make
 cp $EXAMPLE_DIR$EXAMPLE_FILE genI
 cd genI
 javac gram/Main.java
