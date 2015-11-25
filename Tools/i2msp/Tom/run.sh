@@ -13,7 +13,7 @@ cd genI
 javac gram/Main.java
 java gram/Main < $EXAMPLE_FILE > $RES_FILE
 
-#more $RES_FILE
+more $RES_FILE
 
 cp $RES_FILE ../genMaqV
 cd ../genMaqV
