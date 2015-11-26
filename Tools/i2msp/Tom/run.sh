@@ -1,6 +1,6 @@
 #/bin/bash
 EXAMPLE_DIR=exemplos/
-EXAMPLE_FILE=exemplo1.i
+EXAMPLE_FILE=exemplo2.i
 RES_FILE=res.msp
 L_FILE=res.txt
 
