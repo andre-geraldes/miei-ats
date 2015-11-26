@@ -1,7 +1,7 @@
 int inst;
 
 void main() {
-    inst = 0;
+    //inst = 0;
     int a;
     int b = 5; print('i'); print(1);
     int r;
