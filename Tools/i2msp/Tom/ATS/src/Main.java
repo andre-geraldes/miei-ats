@@ -122,8 +122,8 @@ public class Main {
         System.out.println("Foram executados " + m.getCaminhos().size() + " de " + m.getTotalC() + " if else totais.");
         System.out.println("----------------------------------------------");
         System.out.println("Foram executadas " + Float.parseFloat(m.getInst().size()+"")/Float.parseFloat(m.getTotalI()+"") * 100 + "% instruções.");
-        System.out.println("Foram executados " + Float.parseFloat(m.getBlocos().size()+"")/Float.parseFloat(m.getTotalB()+"") * 100 + "% blocos totais.");
-        System.out.println("Foram executados " + Float.parseFloat(m.getCaminhos().size()+"")/Float.parseFloat(m.getTotalC()+"") * 100 + "% if else totais.");
+        System.out.println("Foram executados " + Float.parseFloat(m.getBlocos().size()+"")/Float.parseFloat(m.getTotalB()+"") * 100 + "% blocos.");
+        System.out.println("Foram executados " + Float.parseFloat(m.getCaminhos().size()+"")/Float.parseFloat(m.getTotalC()+"") * 100 + "% if else.");
         System.out.println("----------------------------------------------");
     }
     
