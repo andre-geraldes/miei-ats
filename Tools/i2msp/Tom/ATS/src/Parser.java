@@ -223,44 +223,44 @@ public class Parser {
         System.out.println("Foram executados " + Float.parseFloat(m.getCaminhosExec().size()+"")/Float.parseFloat(m.getTotalC()+"") * 100 + "% dos if/else.");
         System.out.println("Foram executados " + Float.parseFloat(m.getWhilesExec().size()+"")/Float.parseFloat(m.getTotalW()+"") * 100 + "% dos while/for.");
         System.out.println("----------------------------------------------");
-        System.out.println("Instruções executadas:");
+        System.out.println("Instruções executadas(" + m.getInstExec().size() + "):");
         for(String in : m.getInstExec()){
             System.out.print(in + " ");
         }
         System.out.println("");
-        System.out.println("Instruções não executadas:");
+        System.out.println("Instruções não executadas(" + m.getInstNaoExec().size() + "):");
         for(String in : m.getInstNaoExec()){
             System.out.print(in + " ");
         }
         System.out.println("");
         System.out.println("----------------------------------------------");
-        System.out.println("Blocos executados:");
+        System.out.println("Blocos executados(" + m.getBlocosExec().size() + "):");
         for(String in : m.getBlocosExec()){
             System.out.print(in + " ");
         }
         System.out.println("");
-        System.out.println("Blocos não executados:");
+        System.out.println("Blocos não executados(" + m.getBlocosNaoExec().size() + "):");
         for(String in : m.getBlocosNaoExec()){
             System.out.print(in + " ");
         }
         System.out.println("");
         System.out.println("----------------------------------------------");
-        System.out.println("If/else executados:");
+        System.out.println("If/else executados(" + m.getCaminhosExec().size() + "):");
         for(String in : m.getCaminhosExec()){
             System.out.print(in + " ");
         }
         System.out.println("");
-        System.out.println("If/else não executados:");
+        System.out.println("If/else não executados(" + m.getCaminhosNaoExec().size() + "):");
         for(String in : m.getCaminhosNaoExec()){
             System.out.print(in + " ");
         }
         System.out.println("");
         System.out.println("----------------------------------------------");
-        System.out.println("While/for executados:");
+        System.out.println("While/for executados(" + m.getWhilesExec().size() + "):");
         for(String in : m.getWhilesExec().keySet()){
             System.out.println(in + " executado " + m.getWhilesExec().get(in) + " vezes");
         }
-        System.out.println("While/for não executados:");
+        System.out.println("While/for não executados(" + m.getWhilesNaoExec().size() + "):");
         for(String in : m.getWhilesNaoExec()){
             System.out.print(in + " ");
         }
