@@ -21,7 +21,7 @@ void main(){
 
 	print('t');print(12);
 	print('p');print(6);
-	print('h');print(1);
+	print('h');print(2);
 	print('b');print(6);
 	print('f');print(2);
 }
