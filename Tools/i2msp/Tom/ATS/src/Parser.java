@@ -10,7 +10,7 @@ import java.util.HashMap;
  * @author andregeraldes
  */
 public class Parser {
-    private ArrayList<String> instExec = new ArrayList<String>();
+    private ArrayList<String> instExec = new ArrayList<>();
     private ArrayList<String> blocosExec = new ArrayList<String>();
     private ArrayList<String> caminhosExec = new ArrayList<String>();
     private ArrayList<String> instNaoExec = new ArrayList<String>();

@@ -7,7 +7,7 @@ L_FILE=res.txt
 make clean
 make
 echo "---------------------------------------"
-echo ">>>Ficheiro a executar: "$EXAMPLE_FILE
+echo ">> Ficheiro a executar: "$EXAMPLE_FILE
 echo "---------------------------------------"
 cp $EXAMPLE_DIR$EXAMPLE_FILE genI
 cd genI
