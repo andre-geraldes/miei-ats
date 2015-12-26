@@ -112,8 +112,8 @@ public class Printer {
             }
             else if (h.contains("Jump \"fse")){
                 this.nif++;
-                this.newPrint('c', this.nif, i);
-                i += 2;
+                this.newPrint('c', this.nif, i+1);
+                i += 3;
                 tam += 2;
             }
             else if (h.contains("Jumpf \"fenq")){
