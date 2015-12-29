@@ -111,10 +111,12 @@ public class Printer {
                 tam += 2;
             }
             else if (h.contains("Jump \"fse")){
-                this.nif++;
-                this.newPrint('c', this.nif, i+1);
-                i += 3;
-                tam += 2;
+                if(!this.params.get(i+2).contains("ALabel \"fse")){
+                    this.nif++;
+                    this.newPrint('c', this.nif, i+1);
+                    i += 3;
+                    tam += 2;
+                }
             }
             else if (h.contains("Jumpf \"fenq")){
                 this.nc++;
@@ -139,7 +141,53 @@ public class Printer {
                 i += 2;
                 tam += 2;
             }
-            if(h.contains("Jump")){
+            //Bloco anterior a um ciclo for
+            if(h.contains("Jumpf \"ffor")){
+                this.nb++;
+                this.newPrint('b', this.nb, i-1);
+                i += 2;
+                tam += 2;
+            }
+            //Bloco interior de um for
+            if(h.contains("Jump \"for")){
+                this.nb++;
+                this.newPrint('b', this.nb, i-1);
+                i += 2;
+                tam += 2;
+            }
+            //Bloco anterior a um if
+            if(h.contains("Jumpf \"senao")){
+                this.nb++;
+                this.newPrint('b', this.nb, i-1);
+                i += 2;
+                tam += 2;
+            }
+            //Bloco de um if
+            if (h.contains("Jump \"fse")){
+                
+                
+                //Bloco interior de um else
+                if(!this.params.get(i+4).contains("ALabel \"enq") && !this.params.get(i+2).contains("ALabel \"fse") && !this.params.get(i+4).contains("ALabel \"for")){
+                    //Bloco interior de um if
+                    this.nb++;
+                    this.newPrint('b', this.nb, i-1);
+                    i += 2;
+                    tam += 2;
+
+                    this.nb++;
+                    this.newPrint('b', this.nb, i+1);
+                    i += 3;
+                    tam += 2;
+                }
+            }
+            //Bloco anterior a um while
+            if(h.contains("Jumpf \"fenq")){
+                this.nb++;
+                this.newPrint('b', this.nb, i-1);
+                i += 2;
+                tam += 2;
+            }//Bloco interior de um while
+            if(h.contains("Jump \"enq")){
                 this.nb++;
                 this.newPrint('b', this.nb, i-1);
                 i += 2;
@@ -147,7 +195,7 @@ public class Printer {
             }
         }
         
-        //Apos colocar os prints, inserir os valores totais no fim da main
+        //Apos colocar todos os prints, inserir os valores totais no fim da main
         for(i = 0; i < tam && main; i++){
             String h = this.params.get(i);
             if(h.equals("Halt") && main){
@@ -177,6 +225,7 @@ public class Printer {
         this.params.add(index+2, "Pushi "+ i +",IOut");
     }
     
+    //Funcao que guarda o novo res.msp com os prints
     public void writeFile(String filename) throws UnsupportedEncodingException, FileNotFoundException, IOException{
         String res = "";
         for(int i = 0; i < this.params.size(); i++) {
