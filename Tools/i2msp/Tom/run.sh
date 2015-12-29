@@ -1,6 +1,6 @@
 #/bin/bash
 EXAMPLE_DIR=exemplos/
-EXAMPLE_FILE=maiorDeDoisNumeros.i
+EXAMPLE_FILE=exemplo6.i
 RES_FILE=res.msp
 L_FILE=res.txt
 
@@ -15,10 +15,10 @@ javac gram/Main.java
 java gram/Main < $EXAMPLE_FILE > ../$RES_FILE
 
 cd ..
-more $RES_FILE
-javac ATS/src/Main2.java ATS/src/Printer.java
-java -cp ATS/src/ Main2
-more $RES_FILE
+#more $RES_FILE
+javac ATS/src/Main.java ATS/src/Printer.java ATS/src/Parser.java
+java -cp ATS/src/ Main $RES_FILE
+#more $RES_FILE
 
 cp $RES_FILE genMaqV
 cd genMaqV
@@ -28,6 +28,6 @@ cp $L_FILE ..
 #more $L_FILE
 
 cd ..
-javac ATS/src/Main.java ATS/src/Parser.java
-java -cp ATS/src/ Main 
+javac ATS/src/Main.java ATS/src/Parser.java ATS/src/Printer.java
+java -cp ATS/src/ Main $L_FILE 
 

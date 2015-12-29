@@ -164,8 +164,6 @@ public class Printer {
             }
             //Bloco de um if
             if (h.contains("Jump \"fse")){
-                
-                
                 //Bloco interior de um else
                 if(!this.params.get(i+4).contains("ALabel \"enq") && !this.params.get(i+2).contains("ALabel \"fse") && !this.params.get(i+4).contains("ALabel \"for")){
                     //Bloco interior de um if
@@ -214,10 +212,11 @@ public class Printer {
             }
         }
         
+        /*
         //Imprime o msp
         for(String k : this.params){
             System.out.println(k);
-        }
+        }*/
     }
     
     public void newPrint(char a, int i, int index){
