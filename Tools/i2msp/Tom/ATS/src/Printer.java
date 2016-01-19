@@ -90,16 +90,26 @@ public class Printer {
         int tam = this.params.size();
         int i;
         
+        /*
         //Instruções que sao atribuiçoes
         for(i = 0; i < tam; i++){
             String h = this.params.get(i);
             if(h.contains("Store")){
-                this.ni++;
+                if(!this.params.get(i-3).contains("Call") && !this.params.get(i+1).contains("Call")){
+                    this.ni++;
+                    this.newPrint('i', this.ni, i);
+                    i += 2;
+                    tam += 2;
+                }
+            }
+            if(h.contains("Call")){
+                    this.ni++;
                     this.newPrint('i', this.ni, i);
                     i += 2;
                     tam += 2;
             }
-        }
+            
+        }*/
         
         //If/else/while/for
         for(i = 0; i < tam; i++){
@@ -165,7 +175,8 @@ public class Printer {
             //Bloco de um if
             if (h.contains("Jump \"fse")){
                 //Bloco interior de um else
-                if(!this.params.get(i+4).contains("ALabel \"enq") && !this.params.get(i+2).contains("ALabel \"fse") && !this.params.get(i+4).contains("ALabel \"for")){
+                if(!this.params.get(i+4).contains("ALabel \"enq") && !this.params.get(i+2).contains("ALabel \"fse") && 
+                        !this.params.get(i+4).contains("ALabel \"for")){
                     //Bloco interior de um if
                     this.nb++;
                     this.newPrint('b', this.nb, i-1);
@@ -219,6 +230,7 @@ public class Printer {
         }*/
     }
     
+    //Funçao que cria um novo print com o char a, o int i no index recebido
     public void newPrint(char a, int i, int index){
         this.params.add(index+1, "Pushc '" + a + "',IOut");
         this.params.add(index+2, "Pushi "+ i +",IOut");
@@ -235,6 +247,34 @@ public class Printer {
         }
         try (Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filename), "utf-8"))) {
             writer.write(res);
+        }
+    }
+    
+    //Função que adiciona os prints das instruções a um c--
+    public void printInst(String filename) throws UnsupportedEncodingException, FileNotFoundException, IOException{
+        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+            String line = br.readLine();
+            ArrayList<String> codigo = new ArrayList<String>();
+            
+            //Leitura do ficheiro c--
+            while (line != null) {
+                codigo.add(line);
+                line = br.readLine();
+            }
+            //Colocar prints das instrucoes
+            for(int j = 0; j < codigo.size(); j++){
+                String linha = codigo.get(j);
+                if(linha.contains("return") || linha.contains("=") && 
+                        !linha.contains("if") && 
+                        !linha.contains("while") && !linha.contains("for(")) {
+                    this.ni++;
+                    codigo.set(j, linha + "print(\'i\'); print("+this.ni+");");
+                }
+            }
+            //Imprimir o novo codigo
+            for(String linha : codigo){
+                System.out.println(linha);
+            }  
         }
     }
 }

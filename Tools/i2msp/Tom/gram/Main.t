@@ -1,5 +1,5 @@
 package gram;
- 
+
 import gram.i.iAdaptor;
 import gram.i.types.*;
 import org.antlr.runtime.CommonTokenStream;
@@ -30,6 +30,7 @@ public class Main {
 		try {
 			iLexer lexer = new iLexer(new ANTLRInputStream(System.in));
 			CommonTokenStream tokens = new CommonTokenStream(lexer);
+			//System.out.println(tokens);
 			iParser parser = new iParser(tokens);
 			// Parse the input expression
 			Tree b = (Tree) parser.prog().getTree();
@@ -39,6 +40,7 @@ public class Main {
 			Main main = new Main();
 
 			try {
+
 				ArrayList<Integer> numInstrucao = new ArrayList<Integer>();
 				numInstrucao.add(1);
 				`TopDown(CollectFuncsSignature(main.functionSignatures)).visit(p);
@@ -51,17 +53,18 @@ public class Main {
 				String numInstString = main.compileAnnotExpressoes(numInstExps, n);
 				String instrucoes = "";
 				if (args.length > 0) {
-					if (args[0].equals("-fi") && args.length > 1) { 
+					System.out.println(args[0]);
+					if (args[0].equals("-fi") && args.length > 1) {
 						TreeSet<Integer> blocosMaisUsados = new TreeSet<Integer>();
 
-						if(Main.parseFile(args[1],blocosMaisUsados)) { 
+						if(Main.parseFile(args[1],blocosMaisUsados)) {
 							numInstrucao.clear();
 							numInstrucao.add(1);
 							Instrucao p3 = `BottomUp(stratFaultInjectionWithKnowledge(numInstrucao, blocosMaisUsados)).visit(p2);
 							instrucoes = main.compileAnnot(p3);
-						} else { 
-							System.out.println("Failed to parse blocks"); 
-						} 
+						} else {
+							System.out.println("Failed to parse blocks");
+						}
 					}
 					else if (args[0].equals("-bs")) {
 						Instrucao p3 = `TopDown(stratBadSmells()).visit(p);
@@ -87,7 +90,7 @@ public class Main {
 				Viewer.toDot(p,out);
 			}
 			catch (IOException e){
-				System.out.println("ERROR in dot file"); 
+				System.out.println("ERROR in dot file");
 			}
 			*/
 			/*Export code generated to .txt file*/
@@ -141,13 +144,13 @@ public class Main {
     		}
     	}
     	visit Expressao {
-    		Id(id) -> { 
+    		Id(id) -> {
     			idsUtilizados.add(`id);
     		}
-    		IncAntes(opInc,id) -> { 
+    		IncAntes(opInc,id) -> {
     			idsUtilizados.add(`id);
     		}
-    		IncDepois(opInc,id) -> { 
+    		IncDepois(opInc,id) -> {
     			idsUtilizados.add(`id);
     		}
     	}
@@ -320,7 +323,7 @@ public class Main {
 		//return toReturn.concat("Halt");
 		return toReturn.substring(0,toReturn.length()-1);
 	}
-	
+
 	private String compileAnnotInstrucao(Instrucao i, NumToInt numInstrucao) {
 		%match(i) {
 			Atribuicao(_,id,_,opAtrib,_,exp,_) -> {
@@ -411,7 +414,7 @@ public class Main {
 
 				String genInst = `compileAnnotInstrucao(inst, numInstrucao);
 				String function = "ALabel \"f:" + `nome + "\"," + genInst + functionRet + halt;
-				
+
 				return function;
 			}
 
@@ -445,7 +448,7 @@ public class Main {
 
 				String prefix = functionName + "_";
 				String declaration = "Decl \"" + prefix + `idArg + "\" " + actualMemAddress + " " +  sizeAddress + ",";
-				
+
 				return declaration;
 			}
 		}
@@ -468,13 +471,13 @@ public class Main {
 					prefix = "";
 				else
 					prefix = actualFunctionName + "_";
-					
+
 				String storeValue;
 				if (genExp.equals(""))
 					storeValue = "";
 				else
 					storeValue = "Pusha \"" + prefix + `id + "\"," + genExp + "Store,";
-					
+
 				int actualMemAddress = memAdress;
 				memAdress++;
 				int sizeAddress = 1;
@@ -508,26 +511,26 @@ public class Main {
 				return "";
 			}
 
-			Id(id) -> { 
+			Id(id) -> {
 				String prefix;
 				if (actualFunctionName.equals(""))
 					prefix = "";
 				else
 					prefix = actualFunctionName + "_";
-					
-				return "Pusha \"" + prefix + `id + "\",Load,"; 
+
+				return "Pusha \"" + prefix + `id + "\",Load,";
 			}
 
 			Pos(exp) -> { return `compileAnnotExpressoes(exp, numInstrucao); }
 
 			Neg(exp) -> { return `compileAnnotExpressoes(exp, numInstrucao); }
 
-			Nao(exp) -> { 
+			Nao(exp) -> {
 				String genExp = `compileAnnotExpressoes(exp, numInstrucao);
 				return genExp + "Not,";
 			}
 
-			Call(_,id,_,_,parametros,_,_) -> { 
+			Call(_,id,_,_,parametros,_,_) -> {
 					Argumentos argumentos = functionSignatures.get(`id);
 					String prefix = "f:";
 					String loadReturn = callReturnNeeded ? "Pusha \"" + prefix + `id + "\",Load," : "";
@@ -536,29 +539,29 @@ public class Main {
 					return genCallParameters + call + loadReturn;
 			 }
 
-			IncAntes(opInc,id) -> { 
+			IncAntes(opInc,id) -> {
 				String prefix;
 				if (actualFunctionName.equals(""))
 					prefix = "";
 				else
 					prefix = actualFunctionName + "_";
-					
+
 				%match(opInc) {
-					Inc() -> { return "Pusha \"" + prefix + `id + "\",Inc"; } 
+					Inc() -> { return "Pusha \"" + prefix + `id + "\",Inc"; }
 					Dec() -> { return "Pusha \"" + prefix + `id + "\",Dec"; }
 				}
 				return `id;
 			}
 
-			IncDepois(opInc,id) -> { 
+			IncDepois(opInc,id) -> {
 				String prefix;
 				if (actualFunctionName.equals(""))
 					prefix = "";
 				else
 					prefix = actualFunctionName + "_";
-					
+
 				%match(opInc) {
-					Inc() -> { return "Pusha \"" + prefix + `id + "\",Inc,"; } 
+					Inc() -> { return "Pusha \"" + prefix + `id + "\",Inc,"; }
 					Dec() -> { return "Pusha \"" + prefix + `id + "\",Dec,"; }
 				}
 				return `id;
@@ -609,7 +612,7 @@ public class Main {
 					Igual() -> { return genExp1 + genExp2 + "Eq,"; }
 				}
 			}
-			
+
 			Input(_,_,_,tipo,_,_) -> {
 				%match(tipo) {
 					DInt() -> { return "IIn int,"; }
@@ -660,24 +663,24 @@ public class Main {
 		}
 	}
 
-	private static boolean parseFile(String filename, TreeSet<Integer> blocos) { 
-		try { 
-			BufferedReader br = new BufferedReader( new FileReader(filename) ); 
-			String line = ""; 
-			StringTokenizer token = null; 
+	private static boolean parseFile(String filename, TreeSet<Integer> blocos) {
+		try {
+			BufferedReader br = new BufferedReader( new FileReader(filename) );
+			String line = "";
+			StringTokenizer token = null;
 
-			while((line = br.readLine()) != null) { 
-				token = new StringTokenizer(line, ","); 
-
-				while(token.hasMoreTokens()) { 
+			while((line = br.readLine()) != null) {
+				token = new StringTokenizer(line, ",");
+				while(token.hasMoreTokens()) {
 					String tokenS = token.nextToken();
-					blocos.add(Integer.parseInt(tokenS));
-				} 
-			} 
 
-			return true; 
-		} catch(Exception e) { 
-			return false; 
+					blocos.add(Integer.parseInt(tokenS));
+				}
+			}
+
+			return true;
+		} catch(Exception e) {
+			return false;
 		}
 	}
 }
@@ -696,7 +699,7 @@ class NumToInt{
 	public int inc(){
 		return num++;
 	}
-	
+
 	public int get() {
 		return num;
 	}

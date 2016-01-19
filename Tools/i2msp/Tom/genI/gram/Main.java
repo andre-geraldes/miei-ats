@@ -1,5 +1,5 @@
 package gram;
- 
+
 import gram.i.iAdaptor;
 import gram.i.types.*;
 import org.antlr.runtime.CommonTokenStream;
@@ -30,6 +30,7 @@ public class Main {
 		try {
 			iLexer lexer = new iLexer(new ANTLRInputStream(System.in));
 			CommonTokenStream tokens = new CommonTokenStream(lexer);
+			//System.out.println(tokens);
 			iParser parser = new iParser(tokens);
 			// Parse the input expression
 			Tree b = (Tree) parser.prog().getTree();
@@ -39,6 +40,7 @@ public class Main {
 			Main main = new Main();
 
 			try {
+
 				ArrayList<Integer> numInstrucao = new ArrayList<Integer>();
 				numInstrucao.add(1);
 				tom_make_TopDown(tom_make_CollectFuncsSignature(main.functionSignatures)).visit(p);
@@ -51,17 +53,18 @@ public class Main {
 				String numInstString = main.compileAnnotExpressoes(numInstExps, n);
 				String instrucoes = "";
 				if (args.length > 0) {
-					if (args[0].equals("-fi") && args.length > 1) { 
+					System.out.println(args[0]);
+					if (args[0].equals("-fi") && args.length > 1) {
 						TreeSet<Integer> blocosMaisUsados = new TreeSet<Integer>();
 
-						if(Main.parseFile(args[1],blocosMaisUsados)) { 
+						if(Main.parseFile(args[1],blocosMaisUsados)) {
 							numInstrucao.clear();
 							numInstrucao.add(1);
 							Instrucao p3 = tom_make_BottomUp(tom_make_stratFaultInjectionWithKnowledge(numInstrucao,blocosMaisUsados)).visit(p2);
 							instrucoes = main.compileAnnot(p3);
-						} else { 
-							System.out.println("Failed to parse blocks"); 
-						} 
+						} else {
+							System.out.println("Failed to parse blocks");
+						}
 					}
 					else if (args[0].equals("-bs")) {
 						Instrucao p3 = tom_make_TopDown(tom_make_stratBadSmells()).visit(p);
@@ -87,7 +90,7 @@ public class Main {
 				Viewer.toDot(p,out);
 			}
 			catch (IOException e){
-				System.out.println("ERROR in dot file"); 
+				System.out.println("ERROR in dot file");
 			}
 			*/
 			/*Export code generated to .txt file*/
@@ -141,13 +144,13 @@ public class Main {
 
 
 
- 
+
     			idsUtilizados.add(tom_get_slot_Id_Id((( gram.i.types.Expressao )tom__arg)));
     		}}}}{if (tom_is_sort_Expressao(tom__arg)) {if (tom_is_sort_Expressao((( gram.i.types.Expressao )tom__arg))) {if (tom_is_fun_sym_IncAntes((( gram.i.types.Expressao )(( gram.i.types.Expressao )tom__arg)))) {
- 
+
     			idsUtilizados.add(tom_get_slot_IncAntes_Id((( gram.i.types.Expressao )tom__arg)));
     		}}}}{if (tom_is_sort_Expressao(tom__arg)) {if (tom_is_sort_Expressao((( gram.i.types.Expressao )tom__arg))) {if (tom_is_fun_sym_IncDepois((( gram.i.types.Expressao )(( gram.i.types.Expressao )tom__arg)))) {
- 
+
     			idsUtilizados.add(tom_get_slot_IncDepois_Id((( gram.i.types.Expressao )tom__arg)));
     		}}}}}return _visit_Expressao(tom__arg,introspector);}@SuppressWarnings("unchecked")public  gram.i.types.Instrucao  visit_Instrucao( gram.i.types.Instrucao  tom__arg, tom.library.sl.Introspector introspector) throws tom.library.sl.VisitFailure {{{if (tom_is_sort_Instrucao(tom__arg)) {if (tom_is_sort_Instrucao((( gram.i.types.Instrucao )tom__arg))) {if (tom_is_fun_sym_Atribuicao((( gram.i.types.Instrucao )(( gram.i.types.Instrucao )tom__arg)))) {        idsUtilizados.add(tom_get_slot_Atribuicao_Id((( gram.i.types.Instrucao )tom__arg)));       }}}}}return _visit_Instrucao(tom__arg,introspector);}}private static  tom.library.sl.Strategy  tom_make_stratCollectIds( java.util.Set  t0) { return new stratCollectIds(t0);}public static class CollectFuncsSignature extends tom.library.sl.AbstractStrategyBasic {private  java.util.HashMap  signatures;public CollectFuncsSignature( java.util.HashMap  signatures) {super(tom_make_Identity());this.signatures=signatures;}public  java.util.HashMap  getsignatures() {return signatures;}public tom.library.sl.Visitable[] getChildren() {tom.library.sl.Visitable[] stratChildren = new tom.library.sl.Visitable[getChildCount()];stratChildren[0] = super.getChildAt(0);return stratChildren;}public tom.library.sl.Visitable setChildren(tom.library.sl.Visitable[] children) {super.setChildAt(0, children[0]);return this;}public int getChildCount() {return 1;}public tom.library.sl.Visitable getChildAt(int index) {switch (index) {case 0: return super.getChildAt(0);default: throw new IndexOutOfBoundsException();}}public tom.library.sl.Visitable setChildAt(int index, tom.library.sl.Visitable child) {switch (index) {case 0: return super.setChildAt(0, child);default: throw new IndexOutOfBoundsException();}}@SuppressWarnings("unchecked")public <T> T visitLight(T v, tom.library.sl.Introspector introspector) throws tom.library.sl.VisitFailure {if (tom_is_sort_Instrucao(v)) {return ((T)visit_Instrucao((( gram.i.types.Instrucao )v),introspector));}if (!(( null  == environment))) {return ((T)any.visit(environment,introspector));} else {return any.visitLight(v,introspector);}}@SuppressWarnings("unchecked")public  gram.i.types.Instrucao  _visit_Instrucao( gram.i.types.Instrucao  arg, tom.library.sl.Introspector introspector) throws tom.library.sl.VisitFailure {if (!(( null  == environment))) {return (( gram.i.types.Instrucao )any.visit(environment,introspector));} else {return any.visitLight(arg,introspector);}}@SuppressWarnings("unchecked")public  gram.i.types.Instrucao  visit_Instrucao( gram.i.types.Instrucao  tom__arg, tom.library.sl.Introspector introspector) throws tom.library.sl.VisitFailure {{{if (tom_is_sort_Instrucao(tom__arg)) {if (tom_is_sort_Instrucao((( gram.i.types.Instrucao )tom__arg))) {if (tom_is_fun_sym_Funcao((( gram.i.types.Instrucao )(( gram.i.types.Instrucao )tom__arg)))) {
 
@@ -320,7 +323,7 @@ public class Main {
 		//return toReturn.concat("Halt");
 		return toReturn.substring(0,toReturn.length()-1);
 	}
-	
+
 	private String compileAnnotInstrucao(Instrucao i, NumToInt numInstrucao) {
 		{{if (tom_is_sort_Instrucao(i)) {if (tom_is_sort_Instrucao((( gram.i.types.Instrucao )i))) {if (tom_is_fun_sym_Atribuicao((( gram.i.types.Instrucao )(( gram.i.types.Instrucao )i)))) { String  tom_id=tom_get_slot_Atribuicao_Id((( gram.i.types.Instrucao )i)); gram.i.types.OpAtribuicao  tom_opAtrib=tom_get_slot_Atribuicao_op((( gram.i.types.Instrucao )i));
 
@@ -411,7 +414,7 @@ public class Main {
 
 				String genInst = compileAnnotInstrucao(tom_get_slot_Funcao_Instrucao((( gram.i.types.Instrucao )i)),numInstrucao);
 				String function = "ALabel \"f:" + tom_nome+ "\"," + genInst + functionRet + halt;
-				
+
 				return function;
 			}}}}{if (tom_is_sort_Instrucao(i)) {if (tom_is_sort_Instrucao((( gram.i.types.Instrucao )i))) {if (tom_is_fun_sym_Exp((( gram.i.types.Instrucao )(( gram.i.types.Instrucao )i)))) {
 
@@ -445,7 +448,7 @@ public class Main {
 
 				String prefix = functionName + "_";
 				String declaration = "Decl \"" + prefix + tom_get_slot_Argumento_Id((( gram.i.types.Argumentos )args))+ "\" " + actualMemAddress + " " +  sizeAddress + ",";
-				
+
 				return declaration;
 			}}}}}
 
@@ -468,13 +471,13 @@ public class Main {
 					prefix = "";
 				else
 					prefix = actualFunctionName + "_";
-					
+
 				String storeValue;
 				if (genExp.equals(""))
 					storeValue = "";
 				else
 					storeValue = "Pusha \"" + prefix + tom_id+ "\"," + genExp + "Store,";
-					
+
 				int actualMemAddress = memAdress;
 				memAdress++;
 				int sizeAddress = 1;
@@ -508,26 +511,26 @@ public class Main {
 				return "";
 			}}}}{if (tom_is_sort_Expressao(e)) {if (tom_is_sort_Expressao((( gram.i.types.Expressao )e))) {if (tom_is_fun_sym_Id((( gram.i.types.Expressao )(( gram.i.types.Expressao )e)))) {
 
- 
+
 				String prefix;
 				if (actualFunctionName.equals(""))
 					prefix = "";
 				else
 					prefix = actualFunctionName + "_";
-					
-				return "Pusha \"" + prefix + tom_get_slot_Id_Id((( gram.i.types.Expressao )e))+ "\",Load,"; 
+
+				return "Pusha \"" + prefix + tom_get_slot_Id_Id((( gram.i.types.Expressao )e))+ "\",Load,";
 			}}}}{if (tom_is_sort_Expressao(e)) {if (tom_is_sort_Expressao((( gram.i.types.Expressao )e))) {if (tom_is_fun_sym_Pos((( gram.i.types.Expressao )(( gram.i.types.Expressao )e)))) {
 
  return compileAnnotExpressoes(tom_get_slot_Pos_Expressao((( gram.i.types.Expressao )e)),numInstrucao); }}}}{if (tom_is_sort_Expressao(e)) {if (tom_is_sort_Expressao((( gram.i.types.Expressao )e))) {if (tom_is_fun_sym_Neg((( gram.i.types.Expressao )(( gram.i.types.Expressao )e)))) {
 
  return compileAnnotExpressoes(tom_get_slot_Neg_Expressao((( gram.i.types.Expressao )e)),numInstrucao); }}}}{if (tom_is_sort_Expressao(e)) {if (tom_is_sort_Expressao((( gram.i.types.Expressao )e))) {if (tom_is_fun_sym_Nao((( gram.i.types.Expressao )(( gram.i.types.Expressao )e)))) {
 
- 
+
 				String genExp = compileAnnotExpressoes(tom_get_slot_Nao_Expressao((( gram.i.types.Expressao )e)),numInstrucao);
 				return genExp + "Not,";
 			}}}}{if (tom_is_sort_Expressao(e)) {if (tom_is_sort_Expressao((( gram.i.types.Expressao )e))) {if (tom_is_fun_sym_Call((( gram.i.types.Expressao )(( gram.i.types.Expressao )e)))) { String  tom_id=tom_get_slot_Call_Id((( gram.i.types.Expressao )e));
 
- 
+
 					Argumentos argumentos = functionSignatures.get(tom_id);
 					String prefix = "f:";
 					String loadReturn = callReturnNeeded ? "Pusha \"" + prefix + tom_id+ "\",Load," : "";
@@ -536,13 +539,13 @@ public class Main {
 					return genCallParameters + call + loadReturn;
 			 }}}}{if (tom_is_sort_Expressao(e)) {if (tom_is_sort_Expressao((( gram.i.types.Expressao )e))) {if (tom_is_fun_sym_IncAntes((( gram.i.types.Expressao )(( gram.i.types.Expressao )e)))) { gram.i.types.OpInc  tom_opInc=tom_get_slot_IncAntes_OpInc((( gram.i.types.Expressao )e)); String  tom_id=tom_get_slot_IncAntes_Id((( gram.i.types.Expressao )e));
 
- 
+
 				String prefix;
 				if (actualFunctionName.equals(""))
 					prefix = "";
 				else
 					prefix = actualFunctionName + "_";
-					
+
 				{{if (tom_is_sort_OpInc(tom_opInc)) {if (tom_is_sort_OpInc((( gram.i.types.OpInc )tom_opInc))) {if (tom_is_fun_sym_Inc((( gram.i.types.OpInc )(( gram.i.types.OpInc )tom_opInc)))) {
  return "Pusha \"" + prefix + tom_id+ "\",Inc"; }}}}{if (tom_is_sort_OpInc(tom_opInc)) {if (tom_is_sort_OpInc((( gram.i.types.OpInc )tom_opInc))) {if (tom_is_fun_sym_Dec((( gram.i.types.OpInc )(( gram.i.types.OpInc )tom_opInc)))) {
  return "Pusha \"" + prefix + tom_id+ "\",Dec"; }}}}}
@@ -550,13 +553,13 @@ public class Main {
 				return tom_id;
 			}}}}{if (tom_is_sort_Expressao(e)) {if (tom_is_sort_Expressao((( gram.i.types.Expressao )e))) {if (tom_is_fun_sym_IncDepois((( gram.i.types.Expressao )(( gram.i.types.Expressao )e)))) { gram.i.types.OpInc  tom_opInc=tom_get_slot_IncDepois_OpInc((( gram.i.types.Expressao )e)); String  tom_id=tom_get_slot_IncDepois_Id((( gram.i.types.Expressao )e));
 
- 
+
 				String prefix;
 				if (actualFunctionName.equals(""))
 					prefix = "";
 				else
 					prefix = actualFunctionName + "_";
-					
+
 				{{if (tom_is_sort_OpInc(tom_opInc)) {if (tom_is_sort_OpInc((( gram.i.types.OpInc )tom_opInc))) {if (tom_is_fun_sym_Inc((( gram.i.types.OpInc )(( gram.i.types.OpInc )tom_opInc)))) {
  return "Pusha \"" + prefix + tom_id+ "\",Inc,"; }}}}{if (tom_is_sort_OpInc(tom_opInc)) {if (tom_is_sort_OpInc((( gram.i.types.OpInc )tom_opInc))) {if (tom_is_fun_sym_Dec((( gram.i.types.OpInc )(( gram.i.types.OpInc )tom_opInc)))) {
  return "Pusha \"" + prefix + tom_id+ "\",Dec,"; }}}}}
@@ -660,24 +663,24 @@ public class Main {
 		}
 	}
 
-	private static boolean parseFile(String filename, TreeSet<Integer> blocos) { 
-		try { 
-			BufferedReader br = new BufferedReader( new FileReader(filename) ); 
-			String line = ""; 
-			StringTokenizer token = null; 
+	private static boolean parseFile(String filename, TreeSet<Integer> blocos) {
+		try {
+			BufferedReader br = new BufferedReader( new FileReader(filename) );
+			String line = "";
+			StringTokenizer token = null;
 
-			while((line = br.readLine()) != null) { 
-				token = new StringTokenizer(line, ","); 
-
-				while(token.hasMoreTokens()) { 
+			while((line = br.readLine()) != null) {
+				token = new StringTokenizer(line, ",");
+				while(token.hasMoreTokens()) {
 					String tokenS = token.nextToken();
-					blocos.add(Integer.parseInt(tokenS));
-				} 
-			} 
 
-			return true; 
-		} catch(Exception e) { 
-			return false; 
+					blocos.add(Integer.parseInt(tokenS));
+				}
+			}
+
+			return true;
+		} catch(Exception e) {
+			return false;
 		}
 	}
 }
@@ -696,7 +699,7 @@ class NumToInt{
 	public int inc(){
 		return num++;
 	}
-	
+
 	public int get() {
 		return num;
 	}

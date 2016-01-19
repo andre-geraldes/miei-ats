@@ -18,6 +18,7 @@ public class Parser {
     private ArrayList<String> caminhosNaoExec = new ArrayList<String>();
     private HashMap<String,Integer> whilesExec = new HashMap<String,Integer>();
     private ArrayList<String> whilesNaoExec = new ArrayList<String>();
+    private ArrayList<String> naoExec = new ArrayList<String>(); //Contem tudo o que nao foi executado
     private int totalI = 0;
     private int totalB = 0;
     private int totalC = 0;
@@ -184,23 +185,75 @@ public class Parser {
         }
         //Calculo das instruções nao executadas
         for(int i = 1; i <= this.getTotalI(); i++){
-            if(!this.getInstExec().contains("i"+i))
+            if(!this.getInstExec().contains("i"+i)){
                 this.getInstNaoExec().add("i"+i);
+                this.naoExec.add("i"+i);
+            }
         }
         //Calculo dos blocos nao executados
         for(int i = 1; i <= this.getTotalB(); i++){
-            if(!this.getBlocosExec().contains("b"+i))
+            if(!this.getBlocosExec().contains("b"+i)){
                 this.getBlocosNaoExec().add("b"+i);
+                this.naoExec.add("b"+i);
+            }
         }
         //Calculo dos caminhos nao executados
         for(int i = 1; i <= this.getTotalC(); i++){
-            if(!this.getCaminhosExec().contains("c"+i))
+            if(!this.getCaminhosExec().contains("c"+i)){
                 this.getCaminhosNaoExec().add("c"+i);
+                this.naoExec.add("c"+i);
+            }
         }
         //Calculo dos whiles/for nao executados
         for(int i = 1; i <= this.getTotalW(); i++){
-            if(!this.getWhilesExec().keySet().contains("w"+i))
+            if(!this.getWhilesExec().keySet().contains("w"+i)){
                 this.getWhilesNaoExec().add("w"+i);
+                this.naoExec.add("w"+i);
+            }
+        }
+    }
+    
+    //Função que indica quais as linhas que não correram
+    public void insertNotExec(String filename) throws FileNotFoundException, IOException{
+        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+            String line = br.readLine();
+            ArrayList<String> codigo = new ArrayList<String>();
+            
+            int i = 0, b = 0, c = 0, w = 0;
+            
+            //Leitura do ficheiro c--
+            while (line != null) {
+                codigo.add(line);
+                line = br.readLine();
+            }
+            //Indicaçao dos sitios que nao correram
+            for(int j = 0; j < codigo.size(); j++){
+                String linha = codigo.get(j);
+                if(linha.contains("return") || linha.contains("=") && 
+                        !linha.contains("if") && 
+                        !linha.contains("while")) {
+                    i++;
+                    String inst = "i"+i;
+                    if(this.naoExec.contains(inst) && !linha.contains("for") )
+                        codigo.set(j, ">" + linha);
+                }
+                if(linha.contains("if") || linha.contains("else")){
+                    c++;
+                    String inst = "c"+c;
+                    if(this.naoExec.contains(inst))
+                        codigo.set(j, ">" + linha);
+                }
+                if(linha.contains("for") || linha.contains("while")){
+                    w++;
+                    String inst = "w"+w;
+                    if(this.naoExec.contains(inst))
+                        codigo.set(j, ">" + linha);
+                }
+            }
+            //Imprimir resultado
+            for(String s : codigo){
+                System.out.println(s);
+            }
         }
     }
     
