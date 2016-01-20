@@ -90,7 +90,7 @@ public class Printer {
         int tam = this.params.size();
         int i;
         
-        /*
+        /* //Alterado na 3 fase
         //Instruções que sao atribuiçoes
         for(i = 0; i < tam; i++){
             String h = this.params.get(i);

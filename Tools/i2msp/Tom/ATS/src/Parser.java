@@ -119,8 +119,8 @@ public class Parser {
     public void setTotalW(int totalW) {
         this.totalW = totalW;
     }
-    
-    
+
+
     public void parseFile(String filename) throws FileNotFoundException, IOException{
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line = br.readLine();
@@ -132,46 +132,46 @@ public class Parser {
                     k = Integer.parseInt(br.readLine());
                     if(k > 0) this.setTotalI(k);
                 }
-                
+
                 //Total de blocosExec
                 if(line.equals("p")) {
                     k = Integer.parseInt(br.readLine());
                     if(k > 0) this.setTotalB(k);
                 }
-                
+
                 //Total de if else
                 if(line.equals("h")) {
                     k = Integer.parseInt(br.readLine());
                     if(k > 0) this.setTotalC(k);
                 }
-                
+
                 //Total de whiles e fors
                 if(line.equals("f")) {
                     k = Integer.parseInt(br.readLine());
                     if(k > 0) this.setTotalW(k);
                 }
-                
+
                 //Instruções executadas
                 if(line.equals("i")) {
                     h = br.readLine();
                     if(!this.getInstExec().contains("i"+h))
                         this.getInstExec().add("i"+h);
                 }
-                
+
                 //Blocos executados
                 if(line.equals("b")) {
                     h = br.readLine();
                     if(!this.getBlocosExec().contains("b"+h))
                         this.getBlocosExec().add("b"+h);
                 }
-                
+
                 //Caminhos de if else executados
                 if(line.equals("c")) {
                     h = br.readLine();
                     if(!this.getCaminhosExec().contains("c"+h))
                         this.getCaminhosExec().add("c"+h);
                 }
-                
+
                 //Whiles e fors
                 if(line.equals("w")){
                     h = br.readLine();
@@ -179,7 +179,7 @@ public class Parser {
                         this.getWhilesExec().put("w"+h, this.getWhilesExec().get("w"+h) + 1);
                     else this.getWhilesExec().put("w"+h, 1);
                 }
-                
+
                 line = br.readLine();
             }
         }
@@ -212,25 +212,25 @@ public class Parser {
             }
         }
     }
-    
+
     //Função que indica quais as linhas que não correram
     public void insertNotExec(String filename) throws FileNotFoundException, IOException{
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line = br.readLine();
             ArrayList<String> codigo = new ArrayList<String>();
-            
+
             int i = 0, b = 0, c = 0, w = 0;
-            
+
             //Leitura do ficheiro c--
             while (line != null) {
                 codigo.add(line);
                 line = br.readLine();
             }
-            //Indicaçao dos sitios que nao correram
+            //Indentificação das linhas que nao correram
             for(int j = 0; j < codigo.size(); j++){
                 String linha = codigo.get(j);
-                if(linha.contains("return") || linha.contains("=") && 
-                        !linha.contains("if") && 
+                if(linha.contains("return") || linha.contains("=") &&
+                        !linha.contains("if") &&
                         !linha.contains("while")) {
                     i++;
                     String inst = "i"+i;
@@ -250,13 +250,15 @@ public class Parser {
                         codigo.set(j, ">" + linha);
                 }
             }
-            //Imprimir resultado
+            //Imprimir codigo com as linhas executadas e nao executadas
             for(String s : codigo){
                 System.out.println(s);
             }
+            System.out.println("O codigo não executado está marcado com '>'");
         }
     }
-    
+
+    //Imprimir as estatisticas do programa
     public void printRes(){
         System.out.println("----------------------------------------------");
         System.out.println("Foram executadas " + this.getInstExec().size() + " de " + this.getTotalI() + " instruções totais.");

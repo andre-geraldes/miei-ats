@@ -1,6 +1,6 @@
 #/bin/bash
 EXAMPLE_DIR=exemplos/
-EXAMPLE_FILE=$1
+EXAMPLE_FILE=$1 #Argumento 1
 RESULT=printedexample.i
 RES_FILE=res.msp
 L_FILE=res.txt
