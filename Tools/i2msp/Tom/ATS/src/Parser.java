@@ -24,6 +24,11 @@ public class Parser {
     private int totalC = 0;
     private int totalW = 0;
 
+    //Variaveis usadas para colorir as linhas do codigo no resultado final
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+
     public int getTotalI() {
         return totalI;
     }
@@ -250,11 +255,18 @@ public class Parser {
                         codigo.set(j, ">" + linha);
                 }
             }
-            //Imprimir codigo com as linhas executadas e nao executadas
-            for(String s : codigo){
-                System.out.println(s);
+            //Imprimir codigo com as linhas executadas e nao executadas e colorir
+            for(String linha : codigo){
+                if(linha.contains(">")){
+                    if(linha.charAt(0) == '>'){
+                        System.out.println(ANSI_RED + linha + ANSI_RESET);
+                    }
+                }
+                else {
+                    System.out.println(ANSI_GREEN + linha + ANSI_RESET);
+                }
             }
-            System.out.println("O codigo não executado está marcado com '>'");
+            System.out.println("O codigo não executado está marcado com '>' e a cor vermelha");
         }
     }
 

@@ -26,7 +26,7 @@ public class Printer {
     private int nc; //Contador de ciclos
     private int nb; //Contador de blocos
     private int nif;//Contador de ifs/else
-    
+
     public Printer(){
         this.params = new ArrayList<>();
         this.ni = 0;
@@ -74,22 +74,22 @@ public class Printer {
     public void setNif(int nif) {
         this.nif = nif;
     }
-     
+
     public void readfile(String file) throws FileNotFoundException, IOException{
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line = br.readLine();
             String[] array = line.split(",");
             for(String i : array){
                 this.params.add(i);
-            }      
+            }
         }
     }
-    
+
     public void addPrints(){
         boolean main = true;
         int tam = this.params.size();
         int i;
-        
+
         /* //Alterado na 3 fase
         //Instruções que sao atribuiçoes
         for(i = 0; i < tam; i++){
@@ -108,9 +108,9 @@ public class Printer {
                     i += 2;
                     tam += 2;
             }
-            
+
         }*/
-        
+
         //If/else/while/for
         for(i = 0; i < tam; i++){
             String h = this.params.get(i);
@@ -141,7 +141,7 @@ public class Printer {
                 tam += 2;
             }
         }
-        
+
         //Blocos
         for(i = 0; i < tam; i++){
             String h = this.params.get(i);
@@ -175,7 +175,7 @@ public class Printer {
             //Bloco de um if
             if (h.contains("Jump \"fse")){
                 //Bloco interior de um else
-                if(!this.params.get(i+4).contains("ALabel \"enq") && !this.params.get(i+2).contains("ALabel \"fse") && 
+                if(!this.params.get(i+4).contains("ALabel \"enq") && !this.params.get(i+2).contains("ALabel \"fse") &&
                         !this.params.get(i+4).contains("ALabel \"for")){
                     //Bloco interior de um if
                     this.nb++;
@@ -203,7 +203,7 @@ public class Printer {
                 tam += 2;
             }
         }
-        
+
         //Apos colocar todos os prints, inserir os valores totais no fim da main
         for(i = 0; i < tam && main; i++){
             String h = this.params.get(i);
@@ -211,51 +211,51 @@ public class Printer {
                 main = false;
                 this.params.add(i, "Pushi "+ this.ni +",IOut");
                 this.params.add(i, "Pushc 't',IOut");
-                
+
                 this.params.add(i, "Pushi "+ this.nb +",IOut");
                 this.params.add(i, "Pushc 'p',IOut");
-                
+
                 this.params.add(i, "Pushi "+ this.nif +",IOut");
                 this.params.add(i, "Pushc 'h',IOut");
-                
+
                 this.params.add(i, "Pushi "+ this.nc +",IOut");
                 this.params.add(i, "Pushc 'f',IOut");
             }
         }
-        
+
         /*
         //Imprime o msp
         for(String k : this.params){
             System.out.println(k);
         }*/
     }
-    
+
     //Funçao que cria um novo print com o char a, o int i no index recebido
     public void newPrint(char a, int i, int index){
         this.params.add(index+1, "Pushc '" + a + "',IOut");
         this.params.add(index+2, "Pushi "+ i +",IOut");
     }
-    
+
     //Funcao que guarda o novo res.msp com os prints
     public void writeFile(String filename) throws UnsupportedEncodingException, FileNotFoundException, IOException{
         String res = "";
         for(int i = 0; i < this.params.size(); i++) {
-            if(i == this.params.size() - 1) 
+            if(i == this.params.size() - 1)
                 res = res + this.params.get(i);
-            else 
+            else
                 res = res + this.params.get(i) + ",";
         }
         try (Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filename), "utf-8"))) {
             writer.write(res);
         }
     }
-    
+
     //Função que adiciona os prints das instruções a um c--
     public void printInst(String filename) throws UnsupportedEncodingException, FileNotFoundException, IOException{
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line = br.readLine();
             ArrayList<String> codigo = new ArrayList<String>();
-            
+
             //Leitura do ficheiro c--
             while (line != null) {
                 codigo.add(line);
@@ -264,8 +264,8 @@ public class Printer {
             //Colocar prints das instrucoes
             for(int j = 0; j < codigo.size(); j++){
                 String linha = codigo.get(j);
-                if(linha.contains("return") || linha.contains("=") && 
-                        !linha.contains("if") && 
+                if(linha.contains("return") || linha.contains("=") &&
+                        !linha.contains("if") &&
                         !linha.contains("while") && !linha.contains("for(")) {
                     this.ni++;
                     codigo.set(j, linha + "print(\'i\'); print("+this.ni+");");
@@ -274,7 +274,7 @@ public class Printer {
             //Imprimir o novo codigo
             for(String linha : codigo){
                 System.out.println(linha);
-            }  
+            }
         }
     }
 }
