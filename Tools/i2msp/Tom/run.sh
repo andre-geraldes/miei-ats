@@ -1,4 +1,5 @@
 #/bin/bash
+#Para execução do programa chamar: ./run.sh "nomedoficheiro".i
 EXAMPLE_DIR=exemplos/
 EXAMPLE_FILE=$1 #Argumento 1
 RESULT=printedexample.i
