@@ -261,6 +261,9 @@ public class Parser {
                     if(linha.charAt(0) == '>'){
                         System.out.println(ANSI_RED + linha + ANSI_RESET);
                     }
+                    else{
+                        System.out.println(ANSI_GREEN + linha + ANSI_RESET);
+                    }
                 }
                 else {
                     System.out.println(ANSI_GREEN + linha + ANSI_RESET);
